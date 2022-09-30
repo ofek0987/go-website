@@ -44,7 +44,7 @@ func handleKexInit(conn net.Conn) {
 	len, err := conn.Read(reply)
 	checkFatalErr(err)
 	fmt.Println(len)
-	packet := core.ParseSSHPacket(reply[:len])
+	packet, _ := core.ParseSSHPacket(reply[:len])
 	fmt.Println(packet.Mac)
 }
 func main() {
