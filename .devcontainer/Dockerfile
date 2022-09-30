@@ -15,7 +15,7 @@ RUN adduser $USERNAME -s /bin/sh -D -u $USER_UID $USER_GID && \
 # Install packages and Go language server
 RUN apk add -q --update --progress --no-cache git sudo openssh-client fish gcc musl-dev
 RUN go install golang.org/x/tools/gopls@latest
-RUN sudo go install -v github.com/go-delve/delve/cmd/dlv@latest
+RUN go install -v github.com/go-delve/delve/cmd/dlv@latest
 
 # Setup shell
 USER $USERNAME
