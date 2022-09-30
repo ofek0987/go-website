@@ -11,7 +11,8 @@ import (
 )
 
 const (
-	LOCAL_VERSION = "SSH-2.0-gossh_0.1\r\n"
+	LOCAL_VERSION        = "SSH-2.0-gossh_0.1\r\n"
+	MAX_FULL_PACKET_SIZE = 35000
 )
 
 type SSHTrasport struct {
@@ -28,7 +29,7 @@ func checkFatalErr(err error) {
 func initial_handshake(conn net.Conn) error {
 	_, err := conn.Write([]byte(LOCAL_VERSION))
 	checkFatalErr(err)
-	reply := make([]byte, 1024)
+	reply := make([]byte, MAX_FULL_PACKET_SIZE)
 	_, err = conn.Read(reply)
 	checkFatalErr(err)
 	reply_as_str := string(reply)
@@ -39,7 +40,7 @@ func initial_handshake(conn net.Conn) error {
 	return nil
 }
 func handleKexInit(conn net.Conn) {
-	reply := make([]byte, 1080000)
+	reply := make([]byte, MAX_FULL_PACKET_SIZE)
 	len, err := conn.Read(reply)
 	checkFatalErr(err)
 	fmt.Println(len)
