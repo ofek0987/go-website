@@ -6,12 +6,13 @@
 		"golang.go",
 		"davidanson.vscode-markdownlint",
 		"shardulm94.trailing-spaces",
-		"IBM.output-colorizer"
+		"IBM.output-colorizer",
+		"vscodevim.vim"
 	],
 	"settings": {
 		"go.useLanguageServer": true
 	},
-	"postCreateCommand": "go mod download",
+	"postCreateCommand": "go mod download; git config --global --add safe.directory /workspaces/*",
 	"runArgs": [
 		"-u",
 		"vscode",
