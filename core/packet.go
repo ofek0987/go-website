@@ -19,15 +19,14 @@ type Packet struct {
 	Mac         []byte
 }
 
-func (p Packet) ToBytes() []byte {
-	payloadLenInBytes := make([]byte, PACKET_LEN_BYTES_COUNT)
-	binary.BigEndian.PutUint32(payloadLenInBytes, p.PacketLen)
-	paddingLenInBytes := byte(p.PanndingLen)
-	result := payloadLenInBytes
-	result = append(result, paddingLenInBytes)
-	result = append(result, p.Payload...)
-	result = append(result, p.Padding...)
-	result = append(result, p.Mac...)
+func (this Packet) ToBytes() []byte {
+	packetLenInBytes := make([]byte, PACKET_LEN_BYTES_COUNT)
+	binary.BigEndian.PutUint32(packetLenInBytes, this.PacketLen)
+	paddingLenInBytes := byte(this.PanndingLen)
+	result := append(packetLenInBytes, paddingLenInBytes)
+	result = append(result, this.Payload...)
+	result = append(result, this.Padding...)
+	result = append(result, this.Mac...)
 	return result
 }
 
