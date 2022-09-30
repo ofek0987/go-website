@@ -21,7 +21,7 @@ type SSHTrasport struct {
 
 func checkFatalErr(err error) {
 	if err != nil {
-		log.Fatal(err)
+		log.Println(err)
 		os.Exit(-1)
 	}
 }
