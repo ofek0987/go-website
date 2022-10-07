@@ -3,12 +3,7 @@ package core
 import (
 	"encoding/binary"
 	"errors"
-)
-
-const (
-	BAD_PACKET_ERROR        = "Bad packet"
-	PACKET_LEN_BYTES_COUNT  = 4
-	PADDING_LEN_BYTES_COUNT = 1
+	"go-ssh/common"
 )
 
 type Packet struct {
@@ -20,7 +15,7 @@ type Packet struct {
 }
 
 func (this Packet) ToBytes() []byte {
-	packetLenInBytes := make([]byte, PACKET_LEN_BYTES_COUNT)
+	packetLenInBytes := make([]byte, common.PACKET_LEN_BYTES_COUNT)
 	binary.BigEndian.PutUint32(packetLenInBytes, this.PacketLen)
 	paddingLenInBytes := byte(this.PanndingLen)
 	result := append(packetLenInBytes, paddingLenInBytes)
@@ -32,17 +27,17 @@ func (this Packet) ToBytes() []byte {
 
 func ParseSSHPacket(raw []byte) (Packet, error) {
 	rawLen := len(raw)
-	if rawLen <= PACKET_LEN_BYTES_COUNT {
-		return Packet{}, errors.New(BAD_PACKET_ERROR)
+	if rawLen <= common.PACKET_LEN_BYTES_COUNT {
+		return Packet{}, errors.New(common.BAD_PACKET_ERROR)
 	}
-	PacketLenInBytes := raw[:PACKET_LEN_BYTES_COUNT]
+	PacketLenInBytes := raw[:common.PACKET_LEN_BYTES_COUNT]
 	PacketLen := binary.BigEndian.Uint32(PacketLenInBytes)
 	if uint32(rawLen) < PacketLen {
-		return Packet{}, errors.New(BAD_PACKET_ERROR)
+		return Packet{}, errors.New(common.BAD_PACKET_ERROR)
 	}
-	raw = raw[PACKET_LEN_BYTES_COUNT:]
+	raw = raw[common.PACKET_LEN_BYTES_COUNT:]
 	paddingLen := uint8(raw[0])
-	raw = raw[PADDING_LEN_BYTES_COUNT:]
+	raw = raw[common.PADDING_LEN_BYTES_COUNT:]
 	payloadLen := PacketLen - uint32(paddingLen) - 1
 	payload := raw[:payloadLen]
 	raw = raw[payloadLen:]
