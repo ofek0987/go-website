@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
-	"go-ssh/core"
+
+	"github.com/ofek0987/gssh/core"
 )
 
 func main() {
-	peer := "192.168.1.13:22"
+	peer := "172.17.0.3:22"
 	fmt.Println("Starting SSH")
-	transport, err := core.NewTransport(peer)
+	transport, err := core.NewClientTransport(peer)
 	if err != nil {
 		panic(err)
 	}

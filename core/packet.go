@@ -3,7 +3,8 @@ package core
 import (
 	"encoding/binary"
 	"errors"
-	"go-ssh/common"
+
+	"github.com/ofek0987/gssh/common"
 )
 
 type Packet struct {
